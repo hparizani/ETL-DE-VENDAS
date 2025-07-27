@@ -1,0 +1,4 @@
+id_venda,data_venda,produto,quantidade,preco_unitario,cliente
+1,2023-07-01,Camiseta,2,49.90,João
+2,2023-07-02,Calça,1,,Maria
+3,,Tênis,1,199.90,Carlos
