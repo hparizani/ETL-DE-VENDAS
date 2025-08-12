@@ -11,9 +11,15 @@ Este projeto simula um pipeline de ETL simples usando Python, Pandas e PostgreSQ
 1. Crie um banco PostgreSQL local
 2. Execute o script em `sql/create_tables.sql`
 3. Configure o acesso no `src/etl_vendas.py`
-4. Rode o script ETL com:
+4. Rode o script ETL a partir da raiz do projeto. O script procura o arquivo CSV
+   padrão em `data/vendas_raw.csv`, mas você pode informar um caminho
+   diferente como argumento:
 ```bash
+# usando o CSV padrão
 python src/etl_vendas.py
+
+# ou apontando para outro CSV
+python src/etl_vendas.py caminho/para/seu_arquivo.csv
 ```
 
 ## Exemplo de dados
