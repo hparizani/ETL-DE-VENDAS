@@ -1,12 +1,14 @@
 import pandas as pd
 import psycopg2
+import sys
+from pathlib import Path
 
 # Configurações do banco
 DB_CONFIG = {
     "host": "localhost",
-    "dbname": "vendas_db",
+    "dbname": "db_nome",
     "user": "seu_user",
-    "password": "sua_senha"
+    "password": "sua_password"
 }
 
 def extract(path):
@@ -33,6 +35,19 @@ def load(df, table_name="vendas"):
     conn.close()
 
 if __name__ == "__main__":
-    df_raw = extract("../data/vendas_raw.csv")
+    PROJECT_ROOT = Path(__file__).resolve().parents[1]
+    DEFAULT_CSV = PROJECT_ROOT / "data" / "vendas_raw.csv"
+
+    # permite passar o caminho do CSV via argumento; senão usa o padrão
+    csv_path = Path(sys.argv[1]) if len(sys.argv) > 1 else DEFAULT_CSV
+
+    if not csv_path.exists():
+        raise FileNotFoundError(
+            f"CSV não encontrado em: {csv_path}\n"
+            f"Dica: rode 'python src/etl_vendas.py' a partir da raiz do projeto "
+            f"ou passe o caminho: 'python src/etl_vendas.py data/vendas_raw.csv'"
+        )
+
+    df_raw = extract(csv_path)
     df_clean = transform(df_raw)
     load(df_clean)
